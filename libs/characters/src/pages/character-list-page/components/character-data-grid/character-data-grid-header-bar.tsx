@@ -4,11 +4,14 @@ import { type FieldError, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { Button, Divider } from '@react-monorepo/ui';
-import type {
-  CharacterFilters,
-  GenderType,
-  SpecieType,
-  StatusType,
+import {
+  type CharacterListFilters,
+  GENDER,
+  type Gender,
+  SPECIE,
+  type Specie,
+  STATUS,
+  type Status,
 } from '../../../../rest-clients/rick-and-morty/types';
 
 import useCharacterListContext from '../../providers/character-list-provider.hook';
@@ -16,10 +19,10 @@ import {
   setFilters,
   setResults,
 } from '../../providers/character-list-provider.state';
-import GenderFilter, { GENDER_VALUES } from './filters/gender-filter';
+import GenderFilter from './filters/gender-filter';
 import NameFilter from './filters/name-filter';
-import SpecieFilter, { SPECIE_VALUES } from './filters/specie-filter';
-import StatusFilter, { STATUS_VALUES } from './filters/status-filter';
+import SpecieFilter from './filters/specie-filter';
+import StatusFilter from './filters/status-filter';
 import TypeFilter from './filters/type-filter';
 
 function FormError(props: { error?: FieldError }) {
@@ -32,8 +35,7 @@ const schema = z.object({
     .string()
     .optional()
     .refine(
-      (data) =>
-        data ? Object.values(STATUS_VALUES).includes(data as StatusType) : true,
+      (data) => (data ? Object.values(STATUS).includes(data as Status) : true),
       {
         message: 'Status must be alive, dead, or unknown',
       }
@@ -42,8 +44,7 @@ const schema = z.object({
     .string()
     .optional()
     .refine(
-      (data) =>
-        data ? Object.values(SPECIE_VALUES).includes(data as SpecieType) : true,
+      (data) => (data ? Object.values(SPECIE).includes(data as Specie) : true),
       {
         message: 'Species must be human or humanoid',
       }
@@ -53,8 +54,7 @@ const schema = z.object({
     .string()
     .optional()
     .refine(
-      (data) =>
-        data ? Object.values(GENDER_VALUES).includes(data as GenderType) : true,
+      (data) => (data ? Object.values(GENDER).includes(data as Gender) : true),
       {
         message: 'Gender must be female, male, genderless, or unknown',
       }
@@ -74,7 +74,7 @@ export default function CharacterDataGridHeaderBar() {
     formState: { errors },
   } = useForm({
     resolver: zodResolver(schema),
-    defaultValues: filters as CharacterFilters,
+    defaultValues: filters as CharacterListFilters,
   });
 
   const fullReset = React.useCallback(() => {
@@ -84,7 +84,7 @@ export default function CharacterDataGridHeaderBar() {
   }, [dispatch, reset]);
 
   const onSearch = React.useCallback(
-    (data: CharacterFilters) => {
+    (data: CharacterListFilters) => {
       setFilters(dispatch)({
         filters: data,
       });

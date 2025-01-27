@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React from "react";
+import React from 'react';
 
 export type UseQueryProps<T> = {
   queryKey: unknown[];
@@ -24,7 +24,7 @@ export default function useQuery<T>({ queryKey, queryFn }: UseQueryProps<T>) {
         setError(null);
       } catch (err) {
         setError(
-          err instanceof Error ? err : new Error("An unknown error occurred")
+          err instanceof Error ? err : new Error('An unknown error occurred')
         );
         setData(null);
       } finally {

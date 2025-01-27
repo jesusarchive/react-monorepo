@@ -2,7 +2,7 @@ import React from 'react';
 
 import type {
   Character,
-  CharacterFilters,
+  CharacterListFilters,
 } from '../../../rest-clients/rick-and-morty/types';
 
 export type CharacterListActionKind =
@@ -14,12 +14,12 @@ const CharacterListActionKind = {
 } as const;
 
 export type CharacterListState = {
-  filters: CharacterFilters | null;
+  filters: CharacterListFilters | null;
   results: Character[] | null;
 };
 
 type CharacterListSetFiltersPayload = {
-  filters: CharacterFilters | null;
+  filters: CharacterListFilters | null;
 };
 
 type CharacterListSetResultsPayload = {

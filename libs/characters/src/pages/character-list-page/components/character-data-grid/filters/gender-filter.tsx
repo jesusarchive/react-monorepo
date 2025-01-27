@@ -2,20 +2,14 @@ import React from 'react';
 
 import { Select, type SelectProps } from '@react-monorepo/ui';
 import capitalize from '../../../../../utils/capitalize';
-
-export const GENDER_VALUES = {
-  female: 'female',
-  male: 'male',
-  genderless: 'genderless',
-  unknown: 'unknown',
-} as const;
+import { GENDER } from '../../../../../rest-clients/rick-and-morty/types';
 
 const GenderFilter = React.forwardRef<HTMLSelectElement, SelectProps>(
   (props, ref) => {
     const genderSelectOptions = React.useMemo(
       () => [
         { value: '', label: 'Filter by gender' },
-        ...Object.values(GENDER_VALUES).map((el) => ({
+        ...Object.values(GENDER).map((el) => ({
           value: el,
           label: capitalize(el),
         })),

@@ -2,9 +2,9 @@ import { handleFetchErrors } from '../../rest-clients/api-error';
 import getVerbs from '../../rest-clients/verbs';
 
 import { API_CONFIG } from '../api-config';
-import { CharacterFilters } from './types';
+import { CharacterListFilters } from './types';
 
-export type GetRickAndMortyCharactersProps = CharacterFilters;
+export type GetRickAndMortyCharactersProps = CharacterListFilters;
 
 export default async function getRickAndMortyCharacters({
   name,
@@ -29,7 +29,6 @@ export default async function getRickAndMortyCharacters({
 
     return await res.json();
   } catch (ex) {
-    console.log('error', ex);
     throw await handleFetchErrors(ex);
   }
 }

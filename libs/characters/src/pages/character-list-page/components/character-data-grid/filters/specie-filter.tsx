@@ -1,19 +1,15 @@
 import React from 'react';
 
 import { Select, type SelectProps } from '@react-monorepo/ui';
+import { SPECIE } from '../../../../../rest-clients/rick-and-morty/types';
 import capitalize from '../../../../../utils/capitalize';
-
-export const SPECIE_VALUES = {
-  human: 'human',
-  humanoid: 'humanoid',
-} as const;
 
 const SpecieFilter = React.forwardRef<HTMLSelectElement, SelectProps>(
   (props, ref) => {
     const specieSelectOptions = React.useMemo(
       () => [
         { value: '', label: 'Filter by specie' },
-        ...Object.values(SPECIE_VALUES).map((el) => ({
+        ...Object.values(SPECIE).map((el) => ({
           value: el,
           label: capitalize(el),
         })),

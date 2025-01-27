@@ -1,23 +1,23 @@
-export const Status = {
+export const STATUS = {
   ALIVE: 'alive',
   DEAD: 'dead',
   UNKNOWN: 'unknown',
 } as const;
-export type StatusType = (typeof Status)[keyof typeof Status];
+export type Status = (typeof STATUS)[keyof typeof STATUS];
 
-export const Gender = {
+export const GENDER = {
   FEMALE: 'female',
   MALE: 'male',
   GENDERLESS: 'genderless',
   UNKNOWN: 'unknown',
 } as const;
-export type GenderType = (typeof Gender)[keyof typeof Gender];
+export type Gender = (typeof GENDER)[keyof typeof GENDER];
 
-export const Specie = {
+export const SPECIE = {
   HUMAN: 'human',
   HUMANOID: 'humanoid',
 } as const;
-export type SpecieType = (typeof Specie)[keyof typeof Specie];
+export type Specie = (typeof SPECIE)[keyof typeof SPECIE];
 
 export type Location = {
   name: string;
@@ -27,8 +27,8 @@ export type Location = {
 export type Character = {
   id: number;
   name: string;
-  status: StatusType;
-  species: SpecieType;
+  status: Status;
+  species: Specie;
   type: string;
   gender: string;
   origin: Location;
@@ -49,10 +49,10 @@ export type CharacterResponse = {
   results: Character[];
 };
 
-export type CharacterFilters = {
+export type CharacterListFilters = {
   name?: string;
-  status?: StatusType;
-  species?: SpecieType;
+  status?: Status;
+  species?: Specie;
   type?: string;
-  gender?: GenderType;
+  gender?: Gender;
 };
