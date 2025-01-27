@@ -6,9 +6,9 @@ import { z } from 'zod';
 import { Button, Divider } from '@react-monorepo/ui';
 import type {
   CharacterFilters,
-  CharacterGender,
-  CharacterSpecie,
-  CharacterStatus,
+  GenderType,
+  SpecieType,
+  StatusType,
 } from '../../../../rest-clients/rick-and-morty/types';
 
 import useCharacterListContext from '../../providers/character-list-provider.hook';
@@ -33,9 +33,7 @@ const schema = z.object({
     .optional()
     .refine(
       (data) =>
-        data
-          ? Object.values(STATUS_VALUES).includes(data as CharacterStatus)
-          : true,
+        data ? Object.values(STATUS_VALUES).includes(data as StatusType) : true,
       {
         message: 'Status must be alive, dead, or unknown',
       }
@@ -45,9 +43,7 @@ const schema = z.object({
     .optional()
     .refine(
       (data) =>
-        data
-          ? Object.values(SPECIE_VALUES).includes(data as CharacterSpecie)
-          : true,
+        data ? Object.values(SPECIE_VALUES).includes(data as SpecieType) : true,
       {
         message: 'Species must be human or humanoid',
       }
@@ -58,9 +54,7 @@ const schema = z.object({
     .optional()
     .refine(
       (data) =>
-        data
-          ? Object.values(GENDER_VALUES).includes(data as CharacterGender)
-          : true,
+        data ? Object.values(GENDER_VALUES).includes(data as GenderType) : true,
       {
         message: 'Gender must be female, male, genderless, or unknown',
       }

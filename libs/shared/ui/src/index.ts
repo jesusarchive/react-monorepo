@@ -12,6 +12,10 @@ export * from './components/divider';
 export { default as Input } from './components/input';
 export * from './components/input';
 
+// MENU
+export { default as Menu } from './components/menu';
+export * from './components/menu';
+
 // SELECT
 export { default as Select } from './components/select';
 export * from './components/select';
