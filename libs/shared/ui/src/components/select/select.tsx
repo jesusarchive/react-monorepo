@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import { cn } from "@/utils/cn";
+import { cn } from '../../utils/cn';
 
 export type SelectOption = {
   value: string;
@@ -20,7 +20,7 @@ const SelectComponent = React.forwardRef<HTMLSelectElement, SelectProps>(
     return (
       <select
         ref={ref}
-        className={cn("border-gray-300 border-2 rounded p-2", className)}
+        className={cn('border-gray-300 border-2 rounded p-2', className)}
         disabled={loading}
         {...rest}
       >
