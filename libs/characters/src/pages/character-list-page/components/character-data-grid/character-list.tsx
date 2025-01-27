@@ -1,19 +1,17 @@
 import type { Character } from '../../../../rest-clients/rick-and-morty/types';
 
 type CharacterListProps = {
-  results?: Character[];
+  data?: Character[];
 };
 
-export default function CharacterList({
-  results,
-}: Readonly<CharacterListProps>) {
-  if (!results?.length) {
+export default function CharacterList({ data }: Readonly<CharacterListProps>) {
+  if (!data?.length) {
     return null;
   }
 
   return (
     <ul className="border-t border-gray-200 p-4">
-      {results?.map((el: Character) => (
+      {data?.map((el: Character) => (
         <li
           key={el.id}
           className="flex items-center gap-8 bg-gray-100 p-8 rounded-lg shadow border-b border-gray-200 hover:bg-gray-200"

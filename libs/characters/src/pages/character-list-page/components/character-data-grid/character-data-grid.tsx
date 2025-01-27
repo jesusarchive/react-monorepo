@@ -32,12 +32,12 @@ export default function CharacterDataGrid() {
   return (
     <div className="h-full w-full p-10">
       <div className="flex flex-col gap-14 p-6">
-        <h1 className="font-bold text-xl">Rick and Morty Characters</h1>
+        <h1 className="font-bold text-xl">Characters from Dimension C-137</h1>
         <CharacterDataGridHeaderBar />
       </div>
       <div className="h-full w-full flex flex-col gap-8 overflow-hidden">
         {error && (
-          <div className="h-[85vh] flex justify-center items-center">
+          <div className="h-[75vh] flex justify-center items-center">
             <p>Error fetching characters.</p>
           </div>
         )}
@@ -48,7 +48,7 @@ export default function CharacterDataGrid() {
         )}
         {hasData && (
           <div className="overflow-y-auto h-[75vh] p-6">
-            <CharacterList results={data?.results} />
+            <CharacterList data={data?.results} />
           </div>
         )}
       </div>
