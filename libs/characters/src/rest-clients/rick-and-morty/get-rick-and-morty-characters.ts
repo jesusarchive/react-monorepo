@@ -1,5 +1,5 @@
 import { handleFetchErrors } from '../../rest-clients/api-error';
-import getVerbs from '../../rest-clients/verbs';
+import { getVerbs } from '@react-monorepo/utils';
 
 import { API_CONFIG } from '../api-config';
 import { CharacterListFilters } from './types';

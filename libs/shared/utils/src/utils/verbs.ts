@@ -5,7 +5,7 @@ type RequestOptions = {
 };
 
 const defaultHeaders = {
-  "Content-Type": "application/json",
+  'Content-Type': 'application/json',
 };
 
 const defaultOptions = {};
@@ -34,26 +34,26 @@ async function makeRequest(
 }
 
 async function get(url: string, options: RequestOptions = {}) {
-  return makeRequest("GET", url, options);
+  return makeRequest('GET', url, options);
 }
 
 async function post(url: string, options: RequestOptions = {}) {
-  return makeRequest("POST", url, options);
+  return makeRequest('POST', url, options);
 }
 
 async function put(url: string, options: RequestOptions = {}) {
-  return makeRequest("PUT", url, options);
+  return makeRequest('PUT', url, options);
 }
 
 async function patch(url: string, options: RequestOptions = {}) {
-  return makeRequest("PATCH", url, options);
+  return makeRequest('PATCH', url, options);
 }
 
 async function del(url: string, options: RequestOptions = {}) {
-  return makeRequest("DELETE", url, options);
+  return makeRequest('DELETE', url, options);
 }
 
-export default function getVerbs() {
+export function getVerbs() {
   return {
     get,
     post,
