@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 
 export type UseQueryProps<T> = {
@@ -11,6 +10,7 @@ export default function useQuery<T>({ queryKey, queryFn }: UseQueryProps<T>) {
   const [data, setData] = React.useState<T | null>(null);
   const [error, setError] = React.useState<Error | null>(null);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const memoizedQueryFn = React.useCallback(queryFn, [
     JSON.stringify(queryKey),
   ]);
@@ -33,6 +33,7 @@ export default function useQuery<T>({ queryKey, queryFn }: UseQueryProps<T>) {
     };
 
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [memoizedQueryFn, JSON.stringify(queryKey)]);
 
   return { isLoading, data, error };
