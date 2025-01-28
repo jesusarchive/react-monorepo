@@ -10,6 +10,7 @@ import {
 } from '../../providers/character-list-provider.state';
 import CharacterDataGridHeaderBar from './character-data-grid-header-bar';
 import CharacterList from './character-list';
+import CharacterDataGridPagination from './character-data-grid-pagination';
 
 export default function CharacterDataGrid() {
   const { state, dispatch } = useCharacterListContext();
@@ -34,31 +35,26 @@ export default function CharacterDataGrid() {
   }, [dispatch, state?.currentPage]);
 
   return (
-    <div className="h-full w-full p-10">
+    <div className="h-full w-full p-10 flex flex-col gap-6">
       <div className="flex flex-col gap-14 p-6">
         <h1 className="font-bold text-xl">Characters from Dimension C-137</h1>
         <CharacterDataGridHeaderBar />
       </div>
-      <div className="h-full w-full flex flex-col gap-8 overflow-hidden">
-        <div className="flex flex-col h-full">
-          <div className="overflow-y-auto flex-grow p-6 max-h-[60vh]">
+      <div className="flex flex-col h-full overflow-hidden">
+        <div className="flex-1 overflow-y-auto p-6">
+          <div className="h-full overflow-y-auto">
             <CharacterList
               loading={!error && isLoading}
               items={data?.results}
             />
           </div>
-          <div className="flex justify-center mt-4 p-6 gap-4">
-            <Button
-              onClick={onPreviousPageClick}
-              disabled={state?.currentPage === 1}
-            >
-              Previous
-            </Button>
-            <Button onClick={onNextPageClick} disabled={!data?.info?.next}>
-              Next
-            </Button>
-          </div>
         </div>
+        <CharacterDataGridPagination
+          onPreviousPageClick={onPreviousPageClick}
+          onNextPageClick={onNextPageClick}
+          previousPageDisabled={state?.currentPage === 1}
+          nextPageDisabled={!data?.info?.next}
+        />
       </div>
     </div>
   );
