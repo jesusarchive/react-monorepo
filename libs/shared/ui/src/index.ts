@@ -8,6 +8,10 @@ export * from './components/button';
 export { default as Divider } from './components/divider';
 export * from './components/divider';
 
+// FORM
+export { default as Form } from './components/form';
+export * from './components/form';
+
 // INPUT
 export { default as Input } from './components/input';
 export * from './components/input';

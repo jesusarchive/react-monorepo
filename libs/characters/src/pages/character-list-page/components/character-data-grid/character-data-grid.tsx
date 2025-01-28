@@ -1,4 +1,4 @@
-import React from 'react';
+import { useCallback, useEffect } from 'react';
 
 import useGetRickAndMortyCharacters from '../../hooks/use-get-rick-and-morty-characters';
 import useCharacterListContext from '../../providers/character-list-provider.hook';
@@ -18,19 +18,19 @@ export default function CharacterDataGrid() {
     ...state?.filters,
   });
 
-  React.useEffect(() => {
-    if (JSON.stringify(state?.data) !== JSON.stringify(data)) {
-      setData(dispatch)({ data: data ?? null });
-    }
-  }, [data, dispatch, state?.data]);
-
-  const onPreviousPageClick = React.useCallback(() => {
+  const onPreviousPageClick = useCallback(() => {
     setCurrentPage(dispatch)({ currentPage: state?.currentPage - 1 });
   }, [dispatch, state?.currentPage]);
 
-  const onNextPageClick = React.useCallback(() => {
+  const onNextPageClick = useCallback(() => {
     setCurrentPage(dispatch)({ currentPage: state?.currentPage + 1 });
   }, [dispatch, state?.currentPage]);
+
+  useEffect(() => {
+    if (JSON.stringify(state?.data?.info) !== JSON.stringify(data?.info)) {
+      setData(dispatch)({ data: data ?? null });
+    }
+  }, [data, dispatch, state?.data?.info]);
 
   return (
     <div className="h-full w-full p-10 flex flex-col gap-6">

@@ -3,7 +3,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { Button, Divider } from '@react-monorepo/ui';
+import { Button, Divider, Form, FormField } from '@react-monorepo/ui';
 import {
   type CharacterListFilters,
   GENDER,
@@ -25,7 +25,6 @@ import NameFilter from './filters/name-filter';
 import SpecieFilter from './filters/specie-filter';
 import StatusFilter from './filters/status-filter';
 import TypeFilter from './filters/type-filter';
-import FormError from './form-error';
 
 const schema = z.object({
   name: z.string().optional(),
@@ -100,9 +99,9 @@ export default function CharacterDataGridHeaderBar() {
   }, [data?.info?.count]);
 
   return (
-    <form
-      onSubmit={handleSubmit(onSearch)}
+    <Form
       className="w-full flex items-center justify-between p-4 gap-4"
+      onSubmit={handleSubmit(onSearch)}
     >
       <div className="w-full flex items-center justify-evenly">
         <div className="w-full flex gap-8">
@@ -111,26 +110,21 @@ export default function CharacterDataGridHeaderBar() {
           </div>
           <Divider />
           <div className="flex gap-4">
-            <div>
+            <FormField error={errors.name}>
               <NameFilter {...register('name')} />
-              <FormError error={errors.name} />
-            </div>
-            <div>
+            </FormField>
+            <FormField error={errors.status}>
               <StatusFilter {...register('status')} />
-              <FormError error={errors.status} />
-            </div>
-            <div>
+            </FormField>
+            <FormField error={errors.species}>
               <SpecieFilter {...register('species')} />
-              <FormError error={errors.species} />
-            </div>
-            <div>
+            </FormField>
+            <FormField error={errors.type}>
               <TypeFilter {...register('type')} />
-              <FormError error={errors.type} />
-            </div>
-            <div>
+            </FormField>
+            <FormField error={errors.gender}>
               <GenderFilter {...register('gender')} />
-              <FormError error={errors.gender} />
-            </div>
+            </FormField>
           </div>
           <Divider />
           <div className="flex gap-4">
@@ -147,6 +141,6 @@ export default function CharacterDataGridHeaderBar() {
           </div>
         </div>
       </div>
-    </form>
+    </Form>
   );
 }
