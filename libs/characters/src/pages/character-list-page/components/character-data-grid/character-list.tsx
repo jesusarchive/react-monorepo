@@ -28,7 +28,11 @@ export default function CharacterList({
   }
 
   if (!items?.length) {
-    return null;
+    return (
+      <div className="h-full w-full flex justify-center items-center">
+        <p className="text-xl text-gray-500">No items found.</p>
+      </div>
+    );
   }
 
   return (

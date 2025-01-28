@@ -26,13 +26,6 @@ export default function CharacterDataGrid() {
     setCurrentPage(dispatch)({ currentPage: state?.currentPage + 1 });
   }, [dispatch, state?.currentPage]);
 
-  const onGoToPage = React.useCallback(
-    (page: number) => {
-      setCurrentPage(dispatch)({ currentPage: page });
-    },
-    [dispatch]
-  );
-
   const isPreviousPageDisabled = React.useMemo(
     () => state?.currentPage === 1 || isLoading,
     [state?.currentPage, isLoading]
@@ -61,7 +54,7 @@ export default function CharacterDataGrid() {
           <div className="h-full overflow-y-auto border-t border-gray-200">
             <CharacterList
               loading={!error && isLoading}
-              items={data?.results}
+              items={state?.data?.results}
             />
           </div>
         </div>
