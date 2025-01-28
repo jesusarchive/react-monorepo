@@ -50,8 +50,8 @@ export default function CharacterDataGrid() {
         <CharacterDataGridPagination
           onPreviousPageClick={onPreviousPageClick}
           onNextPageClick={onNextPageClick}
-          previousPageDisabled={state?.currentPage === 1}
-          nextPageDisabled={!data?.info?.next}
+          previousPageDisabled={state?.currentPage === 1 || isLoading}
+          nextPageDisabled={!data?.info?.next || isLoading}
         />
       </div>
     </div>

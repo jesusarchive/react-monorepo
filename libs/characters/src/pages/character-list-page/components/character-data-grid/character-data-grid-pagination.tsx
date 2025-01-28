@@ -1,4 +1,5 @@
 import { Button } from '@react-monorepo/ui';
+import React from 'react';
 
 type CharacterDataGridPaginationProps = {
   onPreviousPageClick?: () => void;
