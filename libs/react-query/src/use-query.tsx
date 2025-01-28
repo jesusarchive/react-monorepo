@@ -10,10 +10,13 @@ export default function useQuery<T>({ queryKey, queryFn }: UseQueryProps<T>) {
   const [data, setData] = React.useState<T | null>(null);
   const [error, setError] = React.useState<Error | null>(null);
 
+  const stringifiedQueryKey = React.useMemo(
+    () => JSON.stringify(queryKey),
+    [queryKey]
+  );
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const memoizedQueryFn = React.useCallback(queryFn, [
-    JSON.stringify(queryKey),
-  ]);
+  const memoizedQueryFn = React.useCallback(queryFn, [stringifiedQueryKey]);
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -33,8 +36,7 @@ export default function useQuery<T>({ queryKey, queryFn }: UseQueryProps<T>) {
     };
 
     fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [memoizedQueryFn, JSON.stringify(queryKey)]);
+  }, [memoizedQueryFn, stringifiedQueryKey]);
 
   return { isLoading, data, error };
 }
