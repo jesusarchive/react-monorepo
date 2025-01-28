@@ -1,11 +1,11 @@
 import { Button } from '@react-monorepo/ui';
-import React from 'react';
 
 type CharacterDataGridPaginationProps = {
   onPreviousPageClick?: () => void;
   onNextPageClick?: () => void;
   previousPageDisabled?: boolean;
   nextPageDisabled?: boolean;
+  currentPage?: number;
 };
 
 export default function CharacterDataGridPagination({
@@ -13,15 +13,19 @@ export default function CharacterDataGridPagination({
   onNextPageClick,
   previousPageDisabled,
   nextPageDisabled,
+  currentPage,
 }: CharacterDataGridPaginationProps) {
   return (
-    <div className="flex justify-center mt-4 p-6 gap-4 border-t bg-white">
-      <Button onClick={onPreviousPageClick} disabled={previousPageDisabled}>
-        Previous
-      </Button>
-      <Button onClick={onNextPageClick} disabled={nextPageDisabled}>
-        Next
-      </Button>
+    <div className="flex justify-between items-center mt-4 p-6 border-t bg-white">
+      <span className="text-gray-700">Page {currentPage ?? 0}</span>
+      <div className="flex gap-4">
+        <Button onClick={onPreviousPageClick} disabled={previousPageDisabled}>
+          Previous
+        </Button>
+        <Button onClick={onNextPageClick} disabled={nextPageDisabled}>
+          Next
+        </Button>
+      </div>
     </div>
   );
 }

@@ -1,8 +1,8 @@
-import { useCallback, useEffect } from 'react';
-
+import React from 'react';
 import useGetRickAndMortyCharacters from '../../hooks/use-get-rick-and-morty-characters';
 import useCharacterListContext from '../../providers/character-list-provider.hook';
 import {
+  DEFAULT_PAGE,
   setCurrentPage,
   setData,
 } from '../../providers/character-list-provider.state';
@@ -14,20 +14,38 @@ export default function CharacterDataGrid() {
   const { state, dispatch } = useCharacterListContext();
 
   const { data, isLoading, error } = useGetRickAndMortyCharacters({
-    page: state?.currentPage,
+    page: state?.currentPage ?? DEFAULT_PAGE,
     ...state?.filters,
   });
 
-  const onPreviousPageClick = useCallback(() => {
+  const onPreviousPageClick = React.useCallback(() => {
     setCurrentPage(dispatch)({ currentPage: state?.currentPage - 1 });
   }, [dispatch, state?.currentPage]);
 
-  const onNextPageClick = useCallback(() => {
+  const onNextPageClick = React.useCallback(() => {
     setCurrentPage(dispatch)({ currentPage: state?.currentPage + 1 });
   }, [dispatch, state?.currentPage]);
 
-  useEffect(() => {
-    if (JSON.stringify(state?.data?.info) !== JSON.stringify(data?.info)) {
+  const onGoToPage = React.useCallback(
+    (page: number) => {
+      setCurrentPage(dispatch)({ currentPage: page });
+    },
+    [dispatch]
+  );
+
+  const isPreviousPageDisabled = React.useMemo(
+    () => state?.currentPage === 1 || isLoading,
+    [state?.currentPage, isLoading]
+  );
+  const isNextPageDisabled = React.useMemo(
+    () => !data?.info?.next || isLoading,
+    [data?.info?.next, isLoading]
+  );
+
+  React.useEffect(() => {
+    const isNewData =
+      JSON.stringify(state?.data?.info) !== JSON.stringify(data?.info);
+    if (isNewData) {
       setData(dispatch)({ data: data ?? null });
     }
   }, [data, dispatch, state?.data?.info]);
@@ -50,8 +68,9 @@ export default function CharacterDataGrid() {
         <CharacterDataGridPagination
           onPreviousPageClick={onPreviousPageClick}
           onNextPageClick={onNextPageClick}
-          previousPageDisabled={state?.currentPage === 1 || isLoading}
-          nextPageDisabled={!data?.info?.next || isLoading}
+          previousPageDisabled={isPreviousPageDisabled}
+          nextPageDisabled={isNextPageDisabled}
+          currentPage={state?.currentPage}
         />
       </div>
     </div>

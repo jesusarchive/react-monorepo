@@ -5,6 +5,8 @@ import type {
   CharacterResponse,
 } from '../../../rest-clients/rick-and-morty/types';
 
+export const DEFAULT_PAGE = 1;
+
 export type CharacterListActionKind =
   (typeof CharacterListActionKind)[keyof typeof CharacterListActionKind];
 
@@ -41,7 +43,7 @@ export type CharacterListAction = {
 };
 
 export const getDefaultState = (): CharacterListState => ({
-  currentPage: 1,
+  currentPage: DEFAULT_PAGE,
   filters: {},
   data: null,
 });

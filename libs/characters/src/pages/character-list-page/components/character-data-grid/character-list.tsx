@@ -16,9 +16,9 @@ export default function CharacterList({
       <div className="h-full w-full flex justify-center items-center">
         {Math.random() < 0.1 ? (
           <img
+            className="w-20 h-20"
             src="https://media.tenor.com/BgR83Df82t0AAAAj/portal-rick-and-morty.gif"
             alt="Loading..."
-            className="w-20 h-20"
           />
         ) : (
           <Spinner />
@@ -39,9 +39,9 @@ export default function CharacterList({
           className="flex items-center gap-8 bg-gray-100 p-8 rounded-lg shadow border-b border-gray-200 hover:bg-gray-200"
         >
           <img
+            className="w-20 h-20 rounded-full"
             src={el.image}
             alt={el.name}
-            className="w-20 h-20 rounded-full"
           />
           <div>
             <h2 className="text-2xl font-semibold">{el.name}</h2>

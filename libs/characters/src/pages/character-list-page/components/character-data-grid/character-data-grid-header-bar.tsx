@@ -16,6 +16,7 @@ import {
 
 import useCharacterListContext from '../../providers/character-list-provider.hook';
 import {
+  DEFAULT_PAGE,
   setCurrentPage,
   setData,
   setFilters,
@@ -71,26 +72,31 @@ export default function CharacterDataGridHeaderBar() {
     formState: { errors },
   } = useForm({
     resolver: zodResolver(schema),
-    defaultValues: filters as CharacterListFilters,
+    defaultValues: filters ?? {},
   });
+
+  const resetPagination = React.useCallback(() => {
+    setCurrentPage(dispatch)({ currentPage: DEFAULT_PAGE });
+  }, [dispatch]);
 
   const fullReset = React.useCallback(() => {
     setData(dispatch)({ data: null });
     setFilters(dispatch)({ filters: null });
-    setCurrentPage(dispatch)({ currentPage: 1 });
+    resetPagination();
     reset();
-  }, [dispatch, reset]);
+  }, [dispatch, reset, resetPagination]);
 
   const onSearch = React.useCallback(
     (values: CharacterListFilters) => {
-      if (JSON.stringify(filters) !== JSON.stringify(values)) {
-        setCurrentPage(dispatch)({ currentPage: 1 });
+      const hasNewFilters = JSON.stringify(filters) !== JSON.stringify(values);
+      if (hasNewFilters) {
+        resetPagination();
         setFilters(dispatch)({
           filters: values,
         });
       }
     },
-    [dispatch, filters]
+    [dispatch, filters, resetPagination]
   );
 
   const totalItems = React.useMemo(() => {
