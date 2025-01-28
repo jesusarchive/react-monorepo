@@ -1,3 +1,3 @@
-export * from './utils/capitalize';
-export * from './utils/cn';
-export * from './utils/verbs';
+export * from './capitalize';
+export * from './cn';
+export * from './verbs';

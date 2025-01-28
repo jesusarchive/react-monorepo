@@ -1,6 +1,6 @@
 import type { FieldError } from 'react-hook-form';
 
-type FormErrorProps = {
+export type FormErrorProps = {
   error?: FieldError;
 };
 
