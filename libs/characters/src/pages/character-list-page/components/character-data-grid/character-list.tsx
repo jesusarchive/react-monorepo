@@ -24,7 +24,7 @@ export default function CharacterList({
   }
 
   return (
-    <ul className="border-t border-gray-200 p-4">
+    <ul className="p-4">
       {items?.map((el: Character) => (
         <li
           key={el.id}
