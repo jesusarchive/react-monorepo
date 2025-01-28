@@ -1,17 +1,31 @@
 import type { Character } from '../../../../rest-clients/rick-and-morty/types';
+import { Spinner } from '@react-monorepo/ui';
 
 type CharacterListProps = {
-  data?: Character[];
+  loading?: boolean;
+  items?: Character[];
+  error?: Error;
 };
 
-export default function CharacterList({ data }: Readonly<CharacterListProps>) {
-  if (!data?.length) {
+export default function CharacterList({
+  loading,
+  items,
+}: Readonly<CharacterListProps>) {
+  if (loading) {
+    return (
+      <div className="h-full w-full flex justify-center items-center">
+        <Spinner />
+      </div>
+    );
+  }
+
+  if (!items?.length) {
     return null;
   }
 
   return (
     <ul className="border-t border-gray-200 p-4">
-      {data?.map((el: Character) => (
+      {items?.map((el: Character) => (
         <li
           key={el.id}
           className="flex items-center gap-8 bg-gray-100 p-8 rounded-lg shadow border-b border-gray-200 hover:bg-gray-200"

@@ -1,33 +1,37 @@
 import React from 'react';
 
-import { Spinner } from '@react-monorepo/ui';
+import { Button } from '@react-monorepo/ui';
 
 import useGetRickAndMortyCharacters from '../../hooks/use-get-rick-and-morty-characters';
 import useCharacterListContext from '../../providers/character-list-provider.hook';
-import { setResults } from '../../providers/character-list-provider.state';
+import {
+  setCurrentPage,
+  setData,
+} from '../../providers/character-list-provider.state';
 import CharacterDataGridHeaderBar from './character-data-grid-header-bar';
 import CharacterList from './character-list';
 
 export default function CharacterDataGrid() {
   const { state, dispatch } = useCharacterListContext();
-  const { data, isLoading, error } = useGetRickAndMortyCharacters(
-    state.filters ?? {}
-  );
+
+  const { data, isLoading, error } = useGetRickAndMortyCharacters({
+    page: state?.currentPage,
+    ...state?.filters,
+  });
 
   React.useEffect(() => {
-    if (JSON.stringify(state?.results) !== JSON.stringify(data?.results)) {
-      setResults(dispatch)({ results: data?.results ?? null });
+    if (JSON.stringify(state?.data) !== JSON.stringify(data)) {
+      setData(dispatch)({ data: data ?? null });
     }
-  }, [data?.results, dispatch, state?.results]);
+  }, [data, dispatch, state?.data]);
 
-  const hasData = React.useMemo(
-    () =>
-      !isLoading &&
-      !error &&
-      Array.isArray(data?.results) &&
-      data?.results?.length > 0,
-    [isLoading, error, data?.results]
-  );
+  const onPreviousPageClick = React.useCallback(() => {
+    setCurrentPage(dispatch)({ currentPage: state?.currentPage - 1 });
+  }, [dispatch, state?.currentPage]);
+
+  const onNextPageClick = React.useCallback(() => {
+    setCurrentPage(dispatch)({ currentPage: state?.currentPage + 1 });
+  }, [dispatch, state?.currentPage]);
 
   return (
     <div className="h-full w-full p-10">
@@ -36,21 +40,25 @@ export default function CharacterDataGrid() {
         <CharacterDataGridHeaderBar />
       </div>
       <div className="h-full w-full flex flex-col gap-8 overflow-hidden">
-        {error && (
-          <div className="h-[75vh] flex justify-center items-center">
-            <p>Error fetching characters.</p>
+        <div className="flex flex-col h-full">
+          <div className="overflow-y-auto flex-grow p-6 max-h-[60vh]">
+            <CharacterList
+              loading={!error && isLoading}
+              items={data?.results}
+            />
           </div>
-        )}
-        {!error && isLoading && (
-          <div className="h-[75vh] flex justify-center items-center">
-            <Spinner />
+          <div className="flex justify-center mt-4 p-6 gap-4">
+            <Button
+              onClick={onPreviousPageClick}
+              disabled={state?.currentPage === 1}
+            >
+              Previous
+            </Button>
+            <Button onClick={onNextPageClick} disabled={!data?.info?.next}>
+              Next
+            </Button>
           </div>
-        )}
-        {hasData && (
-          <div className="overflow-y-auto h-[75vh] p-6">
-            <CharacterList data={data?.results} />
-          </div>
-        )}
+        </div>
       </div>
     </div>
   );

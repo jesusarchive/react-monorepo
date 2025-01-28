@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
-import { type FieldError, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { Button, Divider } from '@react-monorepo/ui';
@@ -16,18 +16,16 @@ import {
 
 import useCharacterListContext from '../../providers/character-list-provider.hook';
 import {
+  setCurrentPage,
+  setData,
   setFilters,
-  setResults,
 } from '../../providers/character-list-provider.state';
 import GenderFilter from './filters/gender-filter';
 import NameFilter from './filters/name-filter';
 import SpecieFilter from './filters/specie-filter';
 import StatusFilter from './filters/status-filter';
 import TypeFilter from './filters/type-filter';
-
-function FormError(props: { error?: FieldError }) {
-  return props.error && <p>{props.error.message as string}</p>;
-}
+import FormError from './form-error';
 
 const schema = z.object({
   name: z.string().optional(),
@@ -63,7 +61,7 @@ const schema = z.object({
 
 export default function CharacterDataGridHeaderBar() {
   const {
-    state: { filters, results },
+    state: { filters, data },
     dispatch,
   } = useCharacterListContext();
 
@@ -78,24 +76,28 @@ export default function CharacterDataGridHeaderBar() {
   });
 
   const fullReset = React.useCallback(() => {
-    setResults(dispatch)({ results: null });
+    setData(dispatch)({ data: null });
     setFilters(dispatch)({ filters: null });
+    setCurrentPage(dispatch)({ currentPage: 1 });
     reset();
   }, [dispatch, reset]);
 
   const onSearch = React.useCallback(
-    (data: CharacterListFilters) => {
-      setFilters(dispatch)({
-        filters: data,
-      });
+    (values: CharacterListFilters) => {
+      if (JSON.stringify(filters) !== JSON.stringify(values)) {
+        setCurrentPage(dispatch)({ currentPage: 1 });
+        setFilters(dispatch)({
+          filters: values,
+        });
+      }
     },
-    [dispatch]
+    [dispatch, filters]
   );
 
-  const resultsMessage = React.useMemo(() => {
-    const resultsLength = results?.length ?? 0;
-    return `${resultsLength} item${resultsLength === 1 ? '' : 's'}`;
-  }, [results]);
+  const totalItems = React.useMemo(() => {
+    const count = data?.info?.count ?? 0;
+    return `${count} item${count === 1 ? '' : 's'}`;
+  }, [data?.info?.count]);
 
   return (
     <form
@@ -105,7 +107,7 @@ export default function CharacterDataGridHeaderBar() {
       <div className="w-full flex items-center justify-evenly">
         <div className="w-full flex gap-8">
           <div className="flex items-center gap-4">
-            <span className="text-xl">{resultsMessage}</span>
+            <span className="text-xl">{totalItems}</span>
           </div>
           <Divider />
           <div className="flex gap-4">
