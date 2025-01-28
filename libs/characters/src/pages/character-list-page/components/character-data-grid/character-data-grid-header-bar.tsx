@@ -112,7 +112,7 @@ export default function CharacterDataGridHeaderBar() {
       <div className="w-full flex items-center justify-evenly">
         <div className="w-full flex gap-8">
           <div className="flex items-center gap-4">
-            <span className="text-xl">{totalItems}</span>
+            <span className="text-xl min-w-20">{totalItems}</span>
           </div>
           <Divider />
           <div className="flex gap-4">
