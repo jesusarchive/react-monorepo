@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { cn } from '../../utils/cn';
+import { cn } from '@react-monorepo/utils';
 
 export type MenuItemProps = React.HTMLAttributes<HTMLDivElement> & {
   active?: boolean;

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Select, type SelectProps } from '@react-monorepo/ui';
-import capitalize from '../../../../../utils/capitalize';
+import { capitalize } from '@react-monorepo/utils';
 import { GENDER } from '../../../../../rest-clients/rick-and-morty/types';
 
 const GenderFilter = React.forwardRef<HTMLSelectElement, SelectProps>(

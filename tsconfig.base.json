@@ -17,7 +17,8 @@
     "paths": {
       "@react-monorepo/characters": ["libs/characters/src/index.ts"],
       "@react-monorepo/react-query": ["libs/react-query/src/index.ts"],
-      "@react-monorepo/ui": ["libs/shared/ui/src/index.ts"]
+      "@react-monorepo/ui": ["libs/shared/ui/src/index.ts"],
+      "@react-monorepo/utils": ["libs/shared/utils/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

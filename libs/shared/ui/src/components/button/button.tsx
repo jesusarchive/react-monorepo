@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { cn } from '../../utils/cn';
+import { cn } from '@react-monorepo/utils';
 
 const buttonVariants = {
   default: 'bg-[#E8EAF0] text-[#213E7F] hover:bg-[#D1D5E3] cursor-pointer',

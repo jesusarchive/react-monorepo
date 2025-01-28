@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Select, type SelectProps } from '@react-monorepo/ui';
 import { SPECIE } from '../../../../../rest-clients/rick-and-morty/types';
-import capitalize from '../../../../../utils/capitalize';
+import { capitalize } from '@react-monorepo/utils';
 
 const SpecieFilter = React.forwardRef<HTMLSelectElement, SelectProps>(
   (props, ref) => {
