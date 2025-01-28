@@ -14,7 +14,15 @@ export default function CharacterList({
   if (loading) {
     return (
       <div className="h-full w-full flex justify-center items-center">
-        <Spinner />
+        {Math.random() < 0.1 ? (
+          <img
+            src="https://media.tenor.com/BgR83Df82t0AAAAj/portal-rick-and-morty.gif"
+            alt="Loading..."
+            className="w-20 h-20"
+          />
+        ) : (
+          <Spinner />
+        )}
       </div>
     );
   }

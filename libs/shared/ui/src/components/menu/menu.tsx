@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 import { cn } from '@react-monorepo/utils';
 
@@ -27,24 +26,11 @@ function MenuItem({
   );
 }
 
-export type MenuProps = React.HTMLAttributes<HTMLDivElement> & {
-  logo?: {
-    src: string;
-    alt: string;
-  };
-};
+export type MenuProps = React.HTMLAttributes<HTMLDivElement>;
 
-function Menu({ logo, className, children, ...props }: Readonly<MenuProps>) {
+function Menu({ className, children, ...props }: Readonly<MenuProps>) {
   return (
     <div className={cn('divide-y w-56', className)} {...props}>
-      {logo && (
-        <Link
-          to="/"
-          className={`h-14 w-56 cursor-pointer flex justify-end items-center p-4`}
-        >
-          <img src={logo.src} alt={logo.alt} />
-        </Link>
-      )}
       {children}
     </div>
   );
