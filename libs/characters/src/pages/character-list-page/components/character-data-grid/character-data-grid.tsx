@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { Button } from '@react-monorepo/ui';
-
 import useGetRickAndMortyCharacters from '../../hooks/use-get-rick-and-morty-characters';
 import useCharacterListContext from '../../providers/character-list-provider.hook';
 import {
@@ -9,8 +7,8 @@ import {
   setData,
 } from '../../providers/character-list-provider.state';
 import CharacterDataGridHeaderBar from './character-data-grid-header-bar';
-import CharacterList from './character-list';
 import CharacterDataGridPagination from './character-data-grid-pagination';
+import CharacterList from './character-list';
 
 export default function CharacterDataGrid() {
   const { state, dispatch } = useCharacterListContext();
