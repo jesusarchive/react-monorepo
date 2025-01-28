@@ -16,7 +16,7 @@ export default function CharacterDataGridPagination({
   currentPage,
 }: CharacterDataGridPaginationProps) {
   return (
-    <div className="flex justify-between items-center mt-4 p-6 border-t bg-white">
+    <div className="flex justify-between items-center mt-4 p-6 border-t">
       <span className="text-gray-700">Page {currentPage ?? 0}</span>
       <div className="flex gap-4">
         <Button onClick={onPreviousPageClick} disabled={previousPageDisabled}>
