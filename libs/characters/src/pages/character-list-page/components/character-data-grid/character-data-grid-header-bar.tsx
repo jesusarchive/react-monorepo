@@ -60,10 +60,7 @@ const schema = z.object({
 });
 
 export default function CharacterDataGridHeaderBar() {
-  const {
-    state: { filters, data },
-    dispatch,
-  } = useCharacterListContext();
+  const { state, dispatch } = useCharacterListContext();
 
   const {
     register,
@@ -72,7 +69,7 @@ export default function CharacterDataGridHeaderBar() {
     formState: { errors },
   } = useForm({
     resolver: zodResolver(schema),
-    defaultValues: filters ?? {},
+    defaultValues: state?.filters ?? {},
   });
 
   const resetPagination = React.useCallback(() => {
@@ -88,20 +85,20 @@ export default function CharacterDataGridHeaderBar() {
 
   const onSearch = React.useCallback(
     (values: CharacterListFilters) => {
-      if (JSON.stringify(filters) !== JSON.stringify(values)) {
+      if (JSON.stringify(state?.filters) !== JSON.stringify(values)) {
         resetPagination();
         setFilters(dispatch)({
           filters: values,
         });
       }
     },
-    [dispatch, filters, resetPagination]
+    [dispatch, state?.filters, resetPagination]
   );
 
   const totalItems = React.useMemo(() => {
-    const count = data?.info?.count ?? 0;
+    const count = state?.data?.info?.count ?? 0;
     return `${count} item${count === 1 ? '' : 's'}`;
-  }, [data?.info?.count]);
+  }, [state?.data?.info?.count]);
 
   return (
     <Form

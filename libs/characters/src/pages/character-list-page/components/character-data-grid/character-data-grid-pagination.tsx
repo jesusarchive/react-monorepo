@@ -6,14 +6,6 @@ import useCharacterListContext from '../../providers/character-list-provider.hoo
 export default function CharacterDataGridPagination() {
   const { state, dispatch } = useCharacterListContext();
 
-  const onPreviousPageClick = React.useCallback(() => {
-    setCurrentPage(dispatch)({ currentPage: state?.currentPage - 1 });
-  }, [dispatch, state?.currentPage]);
-
-  const onNextPageClick = React.useCallback(() => {
-    setCurrentPage(dispatch)({ currentPage: state?.currentPage + 1 });
-  }, [dispatch, state?.currentPage]);
-
   const isPreviousPageDisabled = React.useMemo(
     () => state?.currentPage === 1 || state?.isLoading,
     [state?.currentPage, state?.isLoading]
@@ -22,6 +14,14 @@ export default function CharacterDataGridPagination() {
     () => !state?.data?.info?.next || state?.isLoading,
     [state?.data?.info?.next, state?.isLoading]
   );
+
+  const onPreviousPageClick = React.useCallback(() => {
+    setCurrentPage(dispatch)({ currentPage: state?.currentPage - 1 });
+  }, [dispatch, state?.currentPage]);
+
+  const onNextPageClick = React.useCallback(() => {
+    setCurrentPage(dispatch)({ currentPage: state?.currentPage + 1 });
+  }, [dispatch, state?.currentPage]);
 
   return (
     <div className="flex justify-between items-center mt-4 p-6 border-t">

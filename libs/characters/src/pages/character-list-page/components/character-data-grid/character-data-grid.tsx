@@ -21,10 +21,13 @@ export default function CharacterDataGrid() {
   React.useEffect(() => {
     setLoading(dispatch)({ isLoading });
 
-    if (JSON.stringify(state?.data?.info) !== JSON.stringify(data?.info)) {
-      setData(dispatch)({ data: data ?? null });
+    if (
+      data?.info &&
+      JSON.stringify(state?.data?.info) !== JSON.stringify(data?.info)
+    ) {
+      setData(dispatch)({ data });
     }
-  }, [data, dispatch, state?.data?.info, isLoading]);
+  }, [data, dispatch, isLoading, state?.data?.info]);
 
   return (
     <div className="h-full w-full p-10 flex flex-col gap-6">
