@@ -14,7 +14,7 @@ export default function CharacterDataGridPagination({
   previousPageDisabled,
   nextPageDisabled,
   currentPage,
-}: CharacterDataGridPaginationProps) {
+}: Readonly<CharacterDataGridPaginationProps>) {
   return (
     <div className="flex justify-between items-center mt-4 p-6 border-t">
       <span className="text-gray-700">Page {currentPage ?? 0}</span>

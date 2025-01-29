@@ -1,14 +1,17 @@
 import { createBrowserRouter } from 'react-router-dom';
 
 import ErrorBoundary from '../components/error-boundary';
-import HomePage from '../pages/home-page';
-import NotFoundPage from '../pages/not-found-page';
 import Layout from '../layout';
-import CharacterListPage from '@react-monorepo/characters';
+import NotFoundPage from '../pages/not-found-page';
 
 const defaultRoute = {
   index: true,
-  Component: HomePage,
+  async lazy() {
+    const { default: HomePage } = await import('../pages/home-page');
+    return {
+      Component: HomePage,
+    };
+  },
 };
 
 const notFoundRoute = {
@@ -18,7 +21,14 @@ const notFoundRoute = {
 
 const charactersRoute = {
   path: '/characters',
-  element: <CharacterListPage />,
+  async lazy() {
+    const { default: CharacterListPage } = await import(
+      '@react-monorepo/characters'
+    );
+    return {
+      Component: CharacterListPage,
+    };
+  },
 };
 
 export const routes = [
