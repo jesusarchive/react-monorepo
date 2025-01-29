@@ -1,17 +1,11 @@
 import type { Character } from '../../../../rest-clients/rick-and-morty/types';
 import { Spinner } from '@react-monorepo/ui';
+import useCharacterListContext from '../../providers/character-list-provider.hook';
 
-type CharacterListProps = {
-  loading?: boolean;
-  items?: Character[];
-  error?: Error;
-};
+export default function CharacterList() {
+  const { state } = useCharacterListContext();
 
-export default function CharacterList({
-  loading,
-  items,
-}: Readonly<CharacterListProps>) {
-  if (loading) {
+  if (state?.isLoading) {
     return (
       <div className="h-full w-full flex justify-center items-center">
         {Math.random() < 0.1 ? (
@@ -27,7 +21,7 @@ export default function CharacterList({
     );
   }
 
-  if (!items?.length) {
+  if (!state?.data?.results?.length) {
     return (
       <div className="h-full w-full flex justify-center items-center">
         <p className="text-xl text-gray-500">No items found.</p>
@@ -37,7 +31,7 @@ export default function CharacterList({
 
   return (
     <ul className="p-4">
-      {items?.map((el: Character) => (
+      {state?.data?.results?.map((el: Character) => (
         <li
           key={el.id}
           className="flex items-center gap-8 bg-gray-100 p-8 rounded-lg shadow border-b border-gray-200 hover:bg-gray-200"

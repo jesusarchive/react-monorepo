@@ -88,8 +88,7 @@ export default function CharacterDataGridHeaderBar() {
 
   const onSearch = React.useCallback(
     (values: CharacterListFilters) => {
-      const hasNewFilters = JSON.stringify(filters) !== JSON.stringify(values);
-      if (hasNewFilters) {
+      if (JSON.stringify(filters) !== JSON.stringify(values)) {
         resetPagination();
         setFilters(dispatch)({
           filters: values,

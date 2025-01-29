@@ -11,15 +11,21 @@ export type CharacterListActionKind =
   (typeof CharacterListActionKind)[keyof typeof CharacterListActionKind];
 
 const CharacterListActionKind = {
+  SET_LOADING: 'SET_LOADING',
   SET_CURRENT_PAGE: 'SET_CURRENT_PAGE',
   SET_FILTERS: 'SET_FILTERS',
   SET_DATA: 'SET_DATA',
 } as const;
 
 export type CharacterListState = {
+  isLoading: boolean;
   currentPage: number;
   filters: CharacterListFilters | null;
   data: CharacterResponse | null;
+};
+
+type CharacterListSetLoadingPayload = {
+  isLoading: boolean;
 };
 
 type CharacterListSetCurrentPagePayload = {
@@ -37,12 +43,14 @@ type CharacterListSetDataPayload = {
 export type CharacterListAction = {
   type: CharacterListActionKind;
   payload:
+    | CharacterListSetLoadingPayload
     | CharacterListSetCurrentPagePayload
     | CharacterListSetFiltersPayload
     | CharacterListSetDataPayload;
 };
 
 export const getDefaultState = (): CharacterListState => ({
+  isLoading: false,
   currentPage: DEFAULT_PAGE,
   filters: {},
   data: null,
@@ -53,6 +61,12 @@ export function CharacterListPageReducer(
   action: CharacterListAction
 ) {
   switch (action.type) {
+    case CharacterListActionKind.SET_LOADING: {
+      return {
+        ...state,
+        isLoading: (action.payload as CharacterListSetLoadingPayload).isLoading,
+      };
+    }
     case CharacterListActionKind.SET_CURRENT_PAGE: {
       return {
         ...state,
@@ -78,6 +92,15 @@ export function CharacterListPageReducer(
     }
   }
 }
+
+export const setLoading =
+  (dispatch: React.Dispatch<CharacterListAction>) =>
+  ({ isLoading }: CharacterListSetLoadingPayload) => {
+    dispatch({
+      type: CharacterListActionKind.SET_LOADING,
+      payload: { isLoading },
+    });
+  };
 
 export const setCurrentPage =
   (dispatch: React.Dispatch<CharacterListAction>) =>
